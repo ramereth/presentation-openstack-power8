@@ -9,4 +9,4 @@ pytz==2016.6.1
 six==1.10.0
 snowballstemmer==1.2.1
 Sphinx==1.4.5
-sphinxjp.themes.revealjs==0.3.0
+-e git+https://github.com/lgautier/sphinxjp.themes.revealjs.git@0b27102cfdf2fbd99db2280a6be4a21a28a9504e#egg=sphinxjp.themes.revealjs
