@@ -125,7 +125,11 @@ html_theme = 'revealjs'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {"slide_number": True}
+html_theme_options = {
+    "slide_number": True,
+    "width": 1280,
+    "height": 1024
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
