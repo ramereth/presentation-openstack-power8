@@ -6,6 +6,10 @@ Building and running OpenStack on POWER8
   :subtitle: Lance Albertson
   :subtitle-heading: h3
 
+  Oregon State University Open Source Lab
+
+  @ramereth
+
 .. revealjs:: Summary
 
   .. rst-class:: fragment
@@ -35,15 +39,16 @@ Building and running OpenStack on POWER8
     - Little-Endian & Big-Endian
     - Several non-IBM companies building P8 hardware
 
-      - Tyan, Rackspace (OpenCompute-based), Google
+      - Tyan, Rackspace (OpenCompute-based) & Google
 
   .. revealjs:: OpenPower Abstraction Layer (OPAL)
 
-    - OPAL is the new Open Source firmware that POWER8 supports
-    - Acts as an on-system HMC and the machine boots similar to PC servers
-    - Boots a Linux Kernel and loads the boot loader Petitboot
-    - Petitboot provides a shell environment but also features net booting
-    - Petitboot will kexec and boot into the system kernel
+    - OPAL is the new Open Source firmware for POWER8
+    - Acts as an on-system HMC
+    - Enables the machine to boot similar to PC servers
+    - Linux Kernel and loads the boot loader Petitboot
+    - Petitboot provides a shell environment for debugging and setup
+    - Petitboot will use kexec and boot into the system kernel
 
 .. revealjs:: POWER at OSUOSL
   :title-heading: h5
@@ -63,10 +68,10 @@ Building and running OpenStack on POWER8
   .. revealjs:: POWER8 at OSUOSL
 
     - Goal is to provide on-demand PPC64/PPC64LE compute resources to FOSS projects
-    - Assist with ppc64le porting & testing
-    - Expose OSU students to the technology
-    - Collaboration with IBM engineers
-    - Create an vanilla Openstack cluster for FOSS projects
+    - Assist with ppc64/ppc64le porting & testing
+    - Expose OSU students to OpenStack and POWER8
+    - Collaboration with IBM engineers on architecture issues
+    - Create a vanilla Openstack cluster for FOSS projects
 
   .. revealjs:: Projects running on our P8 cluster
 
@@ -98,7 +103,7 @@ Building and running OpenStack on POWER8
 
     - Little community support at the time and opportunity to help the community
     - We use CentOS internally as our primary OS & more familiar with the RHEL eco-system
-    - RHEL has the RDO OpenStack distribution that is fairly supported
+    - RHEL has the RDO OpenStack distribution that is well supported
     - Chef support with OpenStack needed some help
     - I love challenges!
 
@@ -135,15 +140,12 @@ Building and running OpenStack on POWER8
         - Provider and Tenant networking using VXLAN
       - PPC64LE CentOS 7.2
 
-  .. revealjs:: Deployment
+  .. revealjs:: Compute nodes
 
-    - Deployed using Chef
-    - Compute nodes
-
-      - Did initial development on Fedora 19
-      - Fedora 20 PPC64 base system (old)
-      - Fedora 21 versions of a few packages
-      - CentOS 7.2 PPC64LE base system (new)
+    - Did initial development on Fedora 19
+    - Fedora 20 PPC64 base system (old)
+    - Fedora 21 versions of a few packages
+    - CentOS 7.2 PPC64LE base system (new)
 
 .. revealjs:: Architecture porting issues
   :title-heading: h5
@@ -161,17 +163,17 @@ Building and running OpenStack on POWER8
 
   .. revealjs:: Package Support
 
-    - Support for P8 was bleeding edge and new features added weekly
+    - Support for P8 was bleeding edge and new features were added weekly
     - Built versions of latest packages from Fedora rawhide packages:
 
       - qemu
       - libvirt
       - kernel
-    - Have an internal repo for these custom packages
+    - Internal repo for these custom packages:
 
       - http://ftp.osuosl.org/pub/osl/repos/yum/openpower/centos-7/ppc64le/
-    - Kernel would need a few custom options needed for ppc64
-    - Would apply patches from developers at times
+    - Kernel required a few custom options to be enabled
+    - Runtime setup: Disable SMT
 
     .. rv_note::
 
@@ -179,16 +181,21 @@ Building and running OpenStack on POWER8
 
   .. revealjs:: Guest OS images
 
-    - Few OS supported P8 or provided guest images pre-built
+    - Few OS supported ppc64/ppc64le or provided guest images pre-built
     - Variety of tools which are platform specific
-    - Packer -- Multi platform support
+    - Missing support for cloud-init
+    - Initially started creating images manually with qemu directly
 
-      - We needed Go to use Packer
-      - GoLang support was literally in the works
-      - *facepalm*
-      - Finally built our own packer binary last Nov!
+  .. revealjs:: Packer -- Multi platform support
+
+    - We needed Go to use Packer
+    - GoLang support was literally in the works
+    - Finally built our own packer binary last Nov!
+
       - http://ftp.osuosl.org/pub/osl/openpower/rpms/
-      - WIP Packer Templates: https://github.com/osuosl/bento/tree/ramereth/ppc64
+    - WIP Packer Templates:
+
+      - https://github.com/osuosl/bento/tree/ramereth/ppc64
 
   .. revealjs:: Architecture issues
 
@@ -317,8 +324,8 @@ Building and running OpenStack on POWER8
 
   .. revealjs:: Unit Testing
 
-    - Ensure the Chef code is doing what its supposed to do
-    - Easily test architecture specific logic
+    - Ensure the Chef code is doing what it's supposed to do
+    - Easily test Architecture-specific logic
     - Verify configuration files contain proper settings
     - Examples:
 
@@ -337,7 +344,6 @@ Building and running OpenStack on POWER8
       $ rspec spec/default_spec.rb
 
       osl-openstack::default
-      Please report a bug if this causes problems.
         includes cookbook base::ifconfig
         includes cookbook selinux::permissive
         includes cookbook yum-qemu-ev
@@ -476,6 +482,7 @@ Building and running OpenStack on POWER8
     - Add support for object storage
     - Update documentation
     - Add support for non-live migration
+    - Mellanox networking
 
   .. revealjs:: Project experience
 
@@ -483,7 +490,9 @@ Building and running OpenStack on POWER8
     - Expand cluster's disk storage capacity
     - Improve stability of the cluster
     - Add more projects!
-    - http://osuosl.org/services/powerdev/request_hosting
+    - Submit your request:
+
+      - http://osuosl.org/services/powerdev/request_hosting
 
 .. revealjs:: Questions?
 
